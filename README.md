@@ -19,5 +19,5 @@ Try running some of the following tasks to run:
 
 ```localhost environment
 npm i
-npn run start:dev
+npm run start:dev
 ```
