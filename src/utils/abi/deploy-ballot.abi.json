@@ -29,6 +29,11 @@
         "internalType": "address",
         "name": "chairperson",
         "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "_uri",
+        "type": "string"
       }
     ],
     "name": "createBallot",

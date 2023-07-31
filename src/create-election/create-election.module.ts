@@ -4,6 +4,7 @@ import { CreateElectionService } from './create-election.service';
 
 @Module({
     controllers: [CreateElectionController],
-    providers: [CreateElectionService]
+    providers: [CreateElectionService],
+    imports: []
 })
 export class CreateElectionModule { }

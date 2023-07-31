@@ -11,14 +11,16 @@ import { LocalStrategy } from './local.auth';
 import { AdminService } from "src/admin/admin.service";
 import { AdminModule } from "src/admin/admin.module";
 import { AdminSchema } from "src/admin/model/admin.model";
+import { CitizenInfoService } from "src/citizen-info/citizen-info.service";
+import { CitizenInfoSchema } from "src/citizen-info/model/citizen-info.model";
 
 
 @Module({
     imports: [UsersModule, AdminModule, PassportModule, JwtModule.register({
         secret: 'secretKey',
         signOptions: { expiresIn: '60s' },
-    }), MongooseModule.forFeature([{ name: "user", schema: UserSchema }, { name: "admin", schema: AdminSchema }])],
-    providers: [AuthService, UsersService, AdminService, LocalStrategy],
+    }), MongooseModule.forFeature([{ name: "user", schema: UserSchema }, { name: "admin", schema: AdminSchema }, { name: "citizenInfo", schema: CitizenInfoSchema }])],
+    providers: [AuthService, UsersService, AdminService, LocalStrategy, CitizenInfoService],
     controllers: [AuthController],
 })
 export class AuthModule { }

@@ -6,8 +6,8 @@ export class CreateElectionController {
     constructor(private readonly createElectionService: CreateElectionService) { }
 
     @Post('create')
-    create(@Body('superAdmin') chairPersonAddress: string) {
-        return this.createElectionService.createElection(chairPersonAddress);
+    create(@Body('superAdmin') chairPersonAddress: string, @Body('uri') uri: string) {
+        return this.createElectionService.createElection(chairPersonAddress, uri);
     }
 
     @Get()
