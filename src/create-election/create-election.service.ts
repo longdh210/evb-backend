@@ -6,6 +6,9 @@ import { AbiItem } from 'web3-utils'
 import ElectionABI from '../utils/abi/ballot.abi.json';
 import Web3 from 'web3';
 import axios from 'axios';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Company, CompanyDocument } from './model/companies.model';
 
 // let web3 = new Web3("http://127.0.0.1:8545");
 
@@ -22,6 +25,8 @@ let provider = new ethers.providers.JsonRpcProvider(
 
 @Injectable()
 export class CreateElectionService {
+    constructor(@InjectModel('company') private readonly companyModel: Model<CompanyDocument>) { }
+
     async createElection(superAdminAddress: string, uri: string) {
         let wallet = new ethers.Wallet(process.env.OWNER_PRIVATE_KEY, provider);
         const deployElectionContract = new ethers.Contract(
@@ -64,5 +69,24 @@ export class CreateElectionService {
             electionList.push({ electionAddress: eventData[i].returnValues.ballotRoot, name: metadata.data.name, image: metadata.data.image, description: metadata.data.description });
         }
         return electionList;
+    }
+
+    async createCompanyInfo(represent: string, companyName: string, companyInfo: string, businessInfo: string, companyLogo: string): Promise<any> {
+        await this.companyModel.create({
+            represent,
+            companyName,
+            companyInfo,
+            businessInfo,
+            companyLogo
+        });
+        return "Create successfully";
+    }
+
+    async getCompany(query: object): Promise<Company> {
+        return this.companyModel.findOne(query);
+    }
+
+    async getAllCompany(): Promise<Company[]> {
+        return this.companyModel.find();
     }
 }
